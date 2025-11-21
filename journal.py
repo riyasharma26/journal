@@ -89,7 +89,17 @@ st.markdown(
             pointer-events: none;
             z-index: 99999;
         }
-    </style>
+        /* Improved notebook contrast */
+    .notebook-page, .notebook-container, .entry-container {
+        background: #faf7f0 !important; /* lighter parchment */
+        color: #2b2b2b !important;      /* darker text for readability */
+    }
+    textarea, .stTextInput textarea, .stTextArea textarea {
+        background: rgba(255, 255, 255, 0.7) !important;
+        color: #2b2b2b !important;
+        font-weight: 500 !important;
+    }
+</style>
     """,
     unsafe_allow_html=True,
 )
