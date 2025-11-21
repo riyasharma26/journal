@@ -99,6 +99,15 @@ st.markdown(
         color: #2b2b2b !important;
         font-weight: 500 !important;
     }
+    /* Force all previous entry text to be darker */
+    p, li, span, div, .entry-text, .previous-entry, .stMarkdown, .stMarkdown p {
+        color: #2b2b2b !important;
+    }
+    /* Strengthen contrast inside cards or containers */
+    .stContainer, .stCard, .entry-card, .entry-container {
+        color: #2b2b2b !important;
+        background: rgba(255, 255, 255, 0.75) !important;
+    }
 </style>
     """,
     unsafe_allow_html=True,
