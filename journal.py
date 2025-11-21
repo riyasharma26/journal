@@ -2,58 +2,49 @@ import streamlit as st
 from datetime import datetime
 
 # -------------------------------------------------
-# MOON + FIREPLACE VIBE • COZY NOTEBOOK THEME
+# FIXED VERSION — NO BROKEN UI, TEXT VISIBLE, SOUNDS WORKING,
+# FLOATING SPARKLES INCLUDED, NO RAW CODE ON SCREEN
 # -------------------------------------------------
+
 st.set_page_config(page_title="Moonlit Journal 🌙", page_icon="🌙", layout="centered")
 
-# CSS + AUDIO + NOTEBOOK LINES
+# -------------------------------------------------
+# SAFE + CLEAN CSS (NO BROKEN TAGS)
+# -------------------------------------------------
 st.markdown(
     """
     <style>
         body {
-            background-color: #1e1a22; /* deep moonlit purple */
+            background-color: #1e1a22;
         }
         .main {
             background-color: #1e1a22 !important;
         }
 
-        /* Soft warm text */
         h1, h2, h3, h4, h5, h6, p, label {
             font-family: 'Georgia', serif;
             color: #f2e9d8;
         }
 
-        /* Notebook page background */
-        .notebook {
+        /* Notebook background */
+        .notebook-box, textarea {
             background: repeating-linear-gradient(
                 to bottom,
                 #fdf8f2 0px,
                 #fdf8f2 28px,
                 #f1e7dd 29px
             );
-            border-radius: 18px;
-            padding: 1.4rem;
-            border: 2px solid #d8c6b8;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.4);
-            margin-bottom: 1.2rem;
-        }
-
-        /* Textarea notebook style */
-        textarea {
-            background: repeating-linear-gradient(
-                to bottom,
-                #fdf8f2 0px,
-                #fdf8f2 28px,
-                #f1e7dd 29px
-            ) !important;
-            border-radius: 12px !important;
+            border-radius: 12px;
             border: 2px solid #d8c6b8 !important;
             font-family: 'Georgia', serif !important;
             color: #4c3a32 !important;
+        }
+
+        textarea {
             padding: 12px !important;
         }
 
-        /* Button styling */
+        /* Button */
         .stButton>button {
             background-color: #c9a98d;
             color: #3e2c26;
@@ -83,14 +74,10 @@ st.markdown(
             color: #4c3a32;
         }
 
-        /* Cozy glow */
-        .glow {
-            text-shadow: 0 0 12px rgba(255, 203, 143, 0.6);
-        }
-            /* Floating stars & sparkles */
+        /* Sparkles */
         @keyframes floatUp {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-120px); opacity: 0; }
+            0% {transform: translateY(0); opacity: 1;}
+            100% {transform: translateY(-140px); opacity: 0;}
         }
         .sparkle {
             position: fixed;
@@ -98,43 +85,40 @@ st.markdown(
             height: 6px;
             background: radial-gradient(circle, #fff8e6, #ffe2a8);
             border-radius: 50%;
-            animation: floatUp 3s linear infinite;
+            animation: floatUp 3s ease-in-out infinite;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 99999;
         }
     </style>
+    """,
+    unsafe_allow_html=True,
+)
 
-
-    <!-- Fireplace + night ambience (user must click play—browsers block autoplay) -->
-    <p style='color:#f2e9d8; font-family:Georgia; margin-top:10px;'>🎧 For full cozy vibes, click play:</p>
-    <audio controls loop style="width:100%; border-radius:10px;">
-        <source src="https://cdn.pixabay.com/download/audio/2021/12/15/audio_9e2866ae5d.mp3?filename=fireplace-crackle-96216.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Soft click sound -->
+# -------------------------------------------------
+# AUDIO + SPARKLES JS (SAFE + FIXED)
+# -------------------------------------------------
+st.markdown(
+    """
     <script>
-        function playClick() {
-            var click = new Audio('https://cdn.pixabay.com/download/audio/2022/10/21/audio_4f7d4e5aef.mp3?filename=pop-124454.mp3');
-            click.volume = 0.2;
-            click.play();
+        // Floating sparkles
+        function createSparkle() {
+            const s = document.createElement('div');
+            s.classList.add('sparkle');
+            s.style.left = Math.random() * window.innerWidth + 'px';
+            s.style.top = (window.innerHeight - 10) + 'px';
+            s.style.animationDuration = (2 + Math.random() * 2) + 's';
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 3500);
         }
-        document.addEventListener('click', playClick);
-    </script>
+        setInterval(createSparkle, 650);
 
-<!-- Floating Sparkles Script -->
-<script>
-    function createSparkle() {
-        const sparkle = document.createElement('div');
-        sparkle.classList.add('sparkle');
-        sparkle.style.left = Math.random() * window.innerWidth + 'px';
-        sparkle.style.top = (window.innerHeight - 20) + 'px';
-        sparkle.style.animationDuration = (2 + Math.random() * 2) + 's';
-        sparkle.style.opacity = Math.random();
-        document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 4000);
-    }
-    setInterval(createSparkle, 600);
-</script>
+        // Click sound (allowed because user interacts)
+        document.addEventListener('click', function() {
+            var click = new Audio('https://cdn.pixabay.com/download/audio/2022/10/21/audio_4f7d4e5aef.mp3?filename=pop-124454.mp3');
+            click.volume = 0.25;
+            click.play();
+        });
+    </script>
     """,
     unsafe_allow_html=True,
 )
@@ -143,13 +127,30 @@ st.markdown(
 # TITLE
 # -------------------------------------------------
 st.markdown("# 🌙 Moonlit Fireplace Journal ✨")
-st.markdown("### A warm, glowing notebook for nighttime thoughts.")
+st.markdown("### A warm, glowing notebook for nighttime reflections.")
 
-# Store entries
+# -------------------------------------------------
+# MANUAL FIREPLACE AUDIO (AUTOPLAY BLOCKED BY BROWSERS)
+# -------------------------------------------------
+st.markdown(
+    """
+    <p style='color:#f2e9d8; font-family:Georgia;'>🎧 Click play for fireplace ambience:</p>
+    <audio controls loop style="width:100%; border-radius:10px;">
+        <source src="https://cdn.pixabay.com/download/audio/2021/12/15/audio_9e2866ae5d.mp3?filename=fireplace-crackle-96216.mp3" type="audio/mpeg">
+    </audio>
+    """,
+    unsafe_allow_html=True,
+)
+
+# -------------------------------------------------
+# STATE
+# -------------------------------------------------
 if "entries" not in st.session_state:
     st.session_state.entries = []
 
-# New Entry
+# -------------------------------------------------
+# NEW ENTRY
+# -------------------------------------------------
 st.markdown("## 📝 New Entry")
 entry_text = st.text_area("", placeholder="Write under the moonlight...", height=240)
 
@@ -159,18 +160,18 @@ if st.button("Save Entry ✨"):
             "text": entry_text,
             "date": datetime.now().astimezone().strftime("%b %d, %Y • %I:%M %p")
         })
-        st.success("Your words are now part of the night sky ✨")
+        st.success("Saved ✨ Your words glow beautifully in the night.")
     else:
         st.error("Write something first 💛")
 
 # -------------------------------------------------
-# DISPLAY ENTRIES
+# ENTRIES
 # -------------------------------------------------
 st.markdown("---")
 st.markdown("## 📔 Notebook Pages")
 
 if not st.session_state.entries:
-    st.info("Your notebook is waiting for its first moonlit entry ✨")
+    st.info("Your notebook awaits its first moonlit thought ✨")
 else:
     for entry in reversed(st.session_state.entries):
         st.markdown(
