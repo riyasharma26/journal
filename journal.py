@@ -1,100 +1,176 @@
 import streamlit as st
 from datetime import datetime
 
-# -------------------------
-# COZY / GIRLY / WARM VIBES + AUDIO
-# -------------------------
-st.set_page_config(page_title="Cozy Journal ✨", page_icon="🌸", layout="centered")
+# -------------------------------------------------
+# MOON + FIREPLACE VIBE • COZY NOTEBOOK THEME
+# -------------------------------------------------
+st.set_page_config(page_title="Moonlit Journal 🌙", page_icon="🌙", layout="centered")
 
-# Inject custom CSS + audio + click sounds
+# CSS + AUDIO + NOTEBOOK LINES
 st.markdown(
     """
     <style>
         body {
-            background-color: #fcefe8;
+            background-color: #1e1a22; /* deep moonlit purple */
         }
         .main {
-            background-color: #fcefe8 !important;
+            background-color: #1e1a22 !important;
         }
-        h1, h2, h3, h4, h5, h6, p {
+
+        /* Soft warm text */
+        h1, h2, h3, h4, h5, h6, p, label {
             font-family: 'Georgia', serif;
-            color: #6b4a46;
+            color: #f2e9d8;
         }
+
+        /* Notebook page background */
+        .notebook {
+            background: repeating-linear-gradient(
+                to bottom,
+                #fdf8f2 0px,
+                #fdf8f2 28px,
+                #f1e7dd 29px
+            );
+            border-radius: 18px;
+            padding: 1.4rem;
+            border: 2px solid #d8c6b8;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+            margin-bottom: 1.2rem;
+        }
+
+        /* Textarea notebook style */
         textarea {
-            background-color: #fff6f2 !important;
-            border-radius: 14px !important;
-            border: 1px solid #f1d9d2 !important;
+            background: repeating-linear-gradient(
+                to bottom,
+                #fdf8f2 0px,
+                #fdf8f2 28px,
+                #f1e7dd 29px
+            ) !important;
+            border-radius: 12px !important;
+            border: 2px solid #d8c6b8 !important;
             font-family: 'Georgia', serif !important;
-            color: #5a3f3a !important;
+            color: #4c3a32 !important;
+            padding: 12px !important;
         }
+
+        /* Button styling */
         .stButton>button {
-            background-color: #f3d6d1;
-            color: #5a3f3a;
+            background-color: #c9a98d;
+            color: #3e2c26;
             font-family: 'Georgia', serif;
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 0.7rem 1.3rem;
             border: none;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
         }
         .stButton>button:hover {
-            background-color: #eac7c1;
+            background-color: #b99880;
         }
+
+        /* Entry box */
         .entry-box {
-            background-color: #fff6f2;
-            padding: 1.3rem;
-            border-radius: 18px;
-            border: 1px solid #f1d9d2;
+            background: repeating-linear-gradient(
+                to bottom,
+                #fdf8f2 0px,
+                #fdf8f2 28px,
+                #f1e7dd 29px
+            );
+            padding: 1.2rem;
+            border-radius: 16px;
+            border: 2px solid #d8c6b8;
             margin-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+            color: #4c3a32;
+        }
+
+        /* Cozy glow */
+        .glow {
+            text-shadow: 0 0 12px rgba(255, 203, 143, 0.6);
+        }
+            /* Floating stars & sparkles */
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-120px); opacity: 0; }
+        }
+        .sparkle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #fff8e6, #ffe2a8);
+            border-radius: 50%;
+            animation: floatUp 3s linear infinite;
+            pointer-events: none;
+            z-index: 9999;
         }
     </style>
 
-    <!-- Soft lofi background ambience -->
-    <audio autoplay loop volume="0.4">
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9c383746b8.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+
+    <!-- Fireplace + night ambience (user must click play—browsers block autoplay) -->
+    <p style='color:#f2e9d8; font-family:Georgia; margin-top:10px;'>🎧 For full cozy vibes, click play:</p>
+    <audio controls loop style="width:100%; border-radius:10px;">
+        <source src="https://cdn.pixabay.com/download/audio/2021/12/15/audio_9e2866ae5d.mp3?filename=fireplace-crackle-96216.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Soft click sound for buttons -->
+    <!-- Soft click sound -->
     <script>
         function playClick() {
-            var audio = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_b7afb6bbf4.mp3?filename=click-124467.mp3');
-            audio.volume = 0.4;
-            audio.play();
+            var click = new Audio('https://cdn.pixabay.com/download/audio/2022/10/21/audio_4f7d4e5aef.mp3?filename=pop-124454.mp3');
+            click.volume = 0.2;
+            click.play();
         }
         document.addEventListener('click', playClick);
     </script>
+
+<!-- Floating Sparkles Script -->
+<script>
+    function createSparkle() {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        sparkle.style.left = Math.random() * window.innerWidth + 'px';
+        sparkle.style.top = (window.innerHeight - 20) + 'px';
+        sparkle.style.animationDuration = (2 + Math.random() * 2) + 's';
+        sparkle.style.opacity = Math.random();
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 4000);
+    }
+    setInterval(createSparkle, 600);
+</script>
     """,
     unsafe_allow_html=True,
 )
 
-# Title
-st.markdown("# 🌸✨ Soft & Girly Cozy Journal")
-st.markdown("### A warm pastel space for your sweetest thoughts.")
+# -------------------------------------------------
+# TITLE
+# -------------------------------------------------
+st.markdown("# 🌙 Moonlit Fireplace Journal ✨")
+st.markdown("### A warm, glowing notebook for nighttime thoughts.")
 
 # Store entries
 if "entries" not in st.session_state:
     st.session_state.entries = []
 
 # New Entry
-st.markdown("## 🧸 New Entry")
-entry_text = st.text_area("", placeholder="Write something cute...", height=200)
+st.markdown("## 📝 New Entry")
+entry_text = st.text_area("", placeholder="Write under the moonlight...", height=240)
 
-if st.button("Save Entry 💖"):
+if st.button("Save Entry ✨"):
     if entry_text.strip():
         st.session_state.entries.append({
             "text": entry_text,
             "date": datetime.now().astimezone().strftime("%b %d, %Y • %I:%M %p")
         })
-        st.success("Saved ✨ Your journal loves your energy ✨")
+        st.success("Your words are now part of the night sky ✨")
     else:
-        st.error("Write a little something first, sweetheart 💗")
+        st.error("Write something first 💛")
 
-# Display Saved Entries
+# -------------------------------------------------
+# DISPLAY ENTRIES
+# -------------------------------------------------
 st.markdown("---")
-st.markdown("## 📔 Past Entries ✨")
+st.markdown("## 📔 Notebook Pages")
 
 if not st.session_state.entries:
-    st.info("Your pages are waiting for your magic ✨💗")
+    st.info("Your notebook is waiting for its first moonlit entry ✨")
 else:
     for entry in reversed(st.session_state.entries):
         st.markdown(
