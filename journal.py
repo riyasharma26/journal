@@ -66,7 +66,7 @@ if st.button("Save Entry ✧"):
     if entry_text.strip():
         st.session_state.entries.append({
             "text": entry_text,
-            "date": datetime.now().strftime("%b %d, %Y • %I:%M %p")
+            "date": datetime.now().astimezone().strftime("%b %d, %Y • %I:%M %p")
         })
         st.success("Saved to your cozy journal ✨")
     else:
